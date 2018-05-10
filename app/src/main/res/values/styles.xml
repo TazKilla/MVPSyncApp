@@ -8,9 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="details_text_element">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@android:color/black</item>
+    </style>
+
     <dimen name="activity_vertical_margin">12dp</dimen>
     <dimen name="activity_horizontal_margin">24dp</dimen>
 
     <dimen name="txt_hello_size">20sp</dimen>
+
+    <dimen name="car_details_padding">20dp</dimen>
 
 </resources>

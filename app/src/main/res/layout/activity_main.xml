@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -9,13 +9,115 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".views.MainActivity">
+    tools:context=".views.MainActivity"
+    android:background="@android:color/darker_gray">
 
-    <TextView
-        android:id="@+id/tvHello"
+    <LinearLayout
+        android:id="@+id/car_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="@dimen/txt_hello_size"/>
+        android:layout_height="wrap_content"
+        android:padding="@dimen/car_details_padding"
+        android:background="@android:color/white">
 
-</RelativeLayout>
+        <TextView
+            android:text="@string/manufacturer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_manufacturer"
+            style="@style/details_text_element"/>
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/model_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_model"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/year_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_year"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/price_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_price"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/engine_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_engine"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/fuel_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_fuel"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/transmission_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_transmission"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_description"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/imgurl_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_imgurl"
+            style="@style/details_text_element" />
+        <View
+            style="@style/divider"/>
+
+        <TextView
+            android:text="@string/favorite_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/detail_favorite"
+            style="@style/details_text_element" />
+
+    </LinearLayout>
+
+</ScrollView>

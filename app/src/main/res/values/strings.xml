@@ -1,3 +1,19 @@
 <resources>
+    <!--Label-->
     <string name="app_name">MVPRSSReader</string>
+
+    <!--Details title-->
+    <string name="manufacturer_title">Manufacturer</string>
+    <string name="model_title">Model</string>
+    <string name="year_title">Year</string>
+    <string name="price_title">Price</string>
+    <string name="engine_title">Engine</string>
+    <string name="fuel_title">Fuel</string>
+    <string name="transmission_title">Transmission</string>
+    <string name="description_title">Description</string>
+    <string name="imgurl_title">Picture</string>
+    <string name="favorite_title">Favorite</string>
+
+    <!--Technical strings-->
+    <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss2</string>
 </resources>

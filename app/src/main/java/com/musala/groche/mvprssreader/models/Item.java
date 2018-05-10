@@ -7,6 +7,9 @@ public class Item {
     @SerializedName("id")
     public int id;
 
+    @SerializedName("itemtype")
+    public int itemtype;
+
     @SerializedName("label")
     public String label;
 
@@ -18,8 +21,9 @@ public class Item {
 
     public Item() {}
 
-    public Item(int id, String label, String description, String imgurl) {
+    public Item(int id, int itemtype, String label, String description, String imgurl) {
         this.id = id;
+        this.itemtype = itemtype;
         this.label = label;
         this.description = description;
         this.imgurl = imgurl;
@@ -27,6 +31,10 @@ public class Item {
 
     public int getId() {
         return id;
+    }
+
+    public int getItemtype() {
+        return itemtype;
     }
 
     public String getLabel() {
@@ -43,6 +51,10 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setItemtype(int itemtype) {
+        this.itemtype = itemtype;
     }
 
     public void setLabel(String label) {

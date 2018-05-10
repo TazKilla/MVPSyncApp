@@ -1,34 +1,25 @@
 package com.musala.groche.mvprssreader.views;
 
-import android.support.annotation.NonNull;
+import android.app.ProgressDialog;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.musala.groche.mvprssreader.models.Car;
-import com.musala.groche.mvprssreader.models.ListWrapper;
-import com.musala.groche.mvprssreader.models.SheetSuAPI;
 import com.musala.groche.mvprssreader.presenters.MainContract;
 import com.musala.groche.mvprssreader.presenters.MainPresenter;
 import com.musala.groche.mvprssreader.R;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
+public class MainActivity extends BaseActivity implements MainContract.View {
 
     private final static String TAG = "MainActivity";
 
-    private TextView mTextView;
     private MainPresenter mPresenter;
-    private SheetSuAPI sheetSuAPI;
+    private ProgressDialog progressDialog;
 
     @Override
     protected int getContentResource() {
@@ -37,24 +28,54 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     protected void init(@Nullable Bundle state) {
-        mTextView = findViewById(R.id.tvHello);
-        mTextView.setOnClickListener(this);
+        LinearLayout mainLayout;
+        mainLayout = findViewById(R.id.car_layout);
         mPresenter = new MainPresenter();
         mPresenter.attach(this);
-        mPresenter.loadHelloText();
-
-        createSheetSuAPI();
-        sheetSuAPI.getCars().enqueue(carsCallback);
+        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog.setMessage("Waiting for cars list...");
+        progressDialog.setTitle("Loading data");
+        progressDialog.show();
+        mPresenter.loadData();
+        mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Touching screen, send loadNewCar() request...");
+                mPresenter.loadNewCar();
+            }
+        });
     }
 
     @Override
-    public void onTextLoaded(String text) {
-        mTextView.setText(text);
+    public void onCarLoaded(Car car, String[] labels) {
+
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
+        Log.d(TAG, "Car loaded, going to display it...");
+
+        displayCar(car, labels);
     }
 
     @Override
-    public void onClick(View view) {
-        mPresenter.loadHelloText();
+    public void onCarLoadingError() {
+
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
+        Toast.makeText(this, "Error when loading car, please try later", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onItemLoadingError() {
+
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
+        Toast.makeText(this, "Error when loading some items, please try later", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -63,38 +84,29 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         mPresenter.detach();
     }
 
-    Callback<ListWrapper<Car>> carsCallback = new Callback<ListWrapper<Car>>() {
-        @Override
-        public void onResponse(@NonNull Call<ListWrapper<Car>> call, Response<ListWrapper<Car>> response) {
-            if (response.isSuccessful()) {
-                ListWrapper<Car> cars = response.body();
-                if (cars != null) {
-                    Log.d(TAG, "Cars list received:");
-                    for (Car car : cars.elements) {
-                        Log.d(TAG, car.toString());
-                    }
-                }
-            } else {
-                Log.d(TAG, "carsCallback -- Code: " + response.code() + " Message: " + response.message());
-            }
-        }
+    private void displayCar(Car car, String[] labels) {
 
-        @Override
-        public void onFailure(@NonNull Call<ListWrapper<Car>> call, Throwable t) {
-            Log.e(TAG, "carsCallback error -- " + t.toString());
-        }
-    };
+        TextView mTextView;
 
-    private void createSheetSuAPI() {
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss2")
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SheetSuAPI.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        sheetSuAPI = retrofit.create(SheetSuAPI.class);
+        mTextView = findViewById(R.id.detail_manufacturer);
+        mTextView.setText(labels[0]);
+        mTextView = findViewById(R.id.detail_model);
+        mTextView.setText(car.getModel());
+        mTextView = findViewById(R.id.detail_year);
+        mTextView.setText(String.valueOf(car.getYear()));
+        mTextView = findViewById(R.id.detail_price);
+        mTextView.setText(String.valueOf(car.getPrice()));
+        mTextView = findViewById(R.id.detail_engine);
+        mTextView.setText(labels[1]);
+        mTextView = findViewById(R.id.detail_fuel);
+        mTextView.setText(labels[2]);
+        mTextView = findViewById(R.id.detail_transmission);
+        mTextView.setText(labels[3]);
+        mTextView = findViewById(R.id.detail_description);
+        mTextView.setText(car.getDescription());
+        mTextView = findViewById(R.id.detail_imgurl);
+        mTextView.setText(car.getImgurl());
+        mTextView = findViewById(R.id.detail_favorite);
+        mTextView.setText(labels[4]);
     }
 }
