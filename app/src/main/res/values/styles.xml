@@ -17,6 +17,7 @@
     <style name="divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginTop">5dp</item>
         <item name="android:background">@android:color/black</item>
     </style>
 
@@ -26,5 +27,7 @@
     <dimen name="txt_hello_size">20sp</dimen>
 
     <dimen name="car_details_padding">20dp</dimen>
+
+    <dimen name="car_pic_height">250dp</dimen>
 
 </resources>

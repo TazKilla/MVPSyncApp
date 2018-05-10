@@ -1,10 +1,13 @@
 package com.musala.groche.mvprssreader.views;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +16,8 @@ import com.musala.groche.mvprssreader.models.Car;
 import com.musala.groche.mvprssreader.presenters.MainContract;
 import com.musala.groche.mvprssreader.presenters.MainPresenter;
 import com.musala.groche.mvprssreader.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class MainActivity extends BaseActivity implements MainContract.View {
 
@@ -20,6 +25,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     private MainPresenter mPresenter;
     private ProgressDialog progressDialog;
+    private ImageView imageView;
 
     @Override
     protected int getContentResource() {
@@ -29,12 +35,14 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     @Override
     protected void init(@Nullable Bundle state) {
         LinearLayout mainLayout;
+        imageView = findViewById(R.id.detail_img);
         mainLayout = findViewById(R.id.car_layout);
         mPresenter = new MainPresenter();
         mPresenter.attach(this);
         progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("Waiting for cars list...");
-        progressDialog.setTitle("Loading data");
+        progressDialog.setMessage(getString(R.string.toast_loading_cars));
+        progressDialog.setTitle(getString(R.string.toast_title_loading));
+        progressDialog.setCancelable(false);
         progressDialog.show();
         mPresenter.loadData();
         mainLayout.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +61,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             progressDialog.dismiss();
         }
 
-        Log.d(TAG, "Car loaded, going to display it...");
+        Log.d(TAG, "Car number " + car.getId() + " loaded, going to display it...");
 
         displayCar(car, labels);
     }
@@ -65,7 +73,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             progressDialog.dismiss();
         }
 
-        Toast.makeText(this, "Error when loading car, please try later", Toast.LENGTH_LONG).show();
+        Toast.makeText(
+                this,
+                "Error when loading car, please try later",
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     @Override
@@ -75,7 +87,11 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             progressDialog.dismiss();
         }
 
-        Toast.makeText(this, "Error when loading some items, please try later", Toast.LENGTH_LONG).show();
+        Toast.makeText(
+                this,
+                "Error when loading some items, please try later",
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     @Override
@@ -104,9 +120,25 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         mTextView.setText(labels[3]);
         mTextView = findViewById(R.id.detail_description);
         mTextView.setText(car.getDescription());
-        mTextView = findViewById(R.id.detail_imgurl);
-        mTextView.setText(car.getImgurl());
+        Picasso.get().load(car.getImgurl()).placeholder(R.drawable.ic_if_sedan).into(target);
         mTextView = findViewById(R.id.detail_favorite);
         mTextView.setText(labels[4]);
     }
+
+    private Target target = new Target() {
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            imageView.setImageBitmap(bitmap);
+        }
+
+        @Override
+        public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+            imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_if_sedan));
+        }
+    };
 }

@@ -16,4 +16,8 @@
 
     <!--Technical strings-->
     <string name="date_format">yyyy-MM-dd\'T\'HH:mm:ss2</string>
+
+    Toast strings
+    <string name="toast_title_loading">Loading data</string>
+    <string name="toast_loading_cars">Waiting for cars list&#8230;</string>
 </resources>

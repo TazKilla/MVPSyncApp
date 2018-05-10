@@ -104,9 +104,10 @@
             android:text="@string/imgurl_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/detail_imgurl"
-            style="@style/details_text_element" />
+        <ImageView
+            android:id="@+id/detail_img"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/car_pic_height"/>
         <View
             style="@style/divider"/>
 
