@@ -5,16 +5,16 @@ import com.musala.groche.mvprssreader.views.BaseView;
 /**
  * Each presenter must implements this interface
  *
- * @param <V> View for the presenter
+ * @param <View> View for the presenter
  */
-public interface BaseMVPPresenter<V extends BaseView> {
+public interface BaseMVPPresenter<View extends BaseView> {
 
     /**
      * Called when view is attached to presenter
      *
      * @param view the view to attach
      */
-    void attach(V view);
+    void attach(View view);
 
     /**
      * Called when view is detached from presenter

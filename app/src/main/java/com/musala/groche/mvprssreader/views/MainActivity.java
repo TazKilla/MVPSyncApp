@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
                 if (cars != null) {
                     Log.d(TAG, "Cars list received:");
                     for (Car car : cars.elements) {
-                        Log.d(TAG, cars.toString());
+                        Log.d(TAG, car.toString());
                     }
                 }
             } else {

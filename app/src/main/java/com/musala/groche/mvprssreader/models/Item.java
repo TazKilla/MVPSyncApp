@@ -57,6 +57,7 @@ public class Item {
         this.imgurl = imgurl;
     }
 
+    @Override
     public String toString() {
         return "ID: " + this.getId() + "\n" +
                 "Label: " + this.getLabel() + "\n" +

@@ -2,15 +2,15 @@ package com.musala.groche.mvprssreader.presenters;
 
 import com.musala.groche.mvprssreader.views.BaseView;
 
-public class BasePresenter<V extends BaseView> implements BaseMVPPresenter<V> {
+public class BasePresenter<View extends BaseView> implements BaseMVPPresenter<View> {
 
     /**
      * Attached view
      */
-    private V mView;
+    private View mView;
 
     @Override
-    public void attach(V view) {
+    public void attach(View view) {
         mView = view;
     }
 
@@ -24,7 +24,7 @@ public class BasePresenter<V extends BaseView> implements BaseMVPPresenter<V> {
         return mView != null;
     }
 
-    V getmView() {
+    View getmView() {
         return mView;
     }
 }
